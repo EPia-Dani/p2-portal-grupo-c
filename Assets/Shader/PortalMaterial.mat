@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PortalMaterialShader
+  m_Name: PortalMaterial
   m_Shader: {fileID: 4800000, guid: 7b32a279939677c428ec048131a6a2a1, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -24,11 +24,16 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
+        m_Texture: {fileID: 8400000, guid: 43a5fe613bce4c64aab14233f137f913, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _Cutout: 0.5
     m_Colors: []
   m_BuildTextureStacks: []
   m_AllowLocking: 1
