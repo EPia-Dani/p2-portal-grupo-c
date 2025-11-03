@@ -27,7 +27,7 @@ public class arma_script : MonoBehaviour
 
                 if (Physics.Raycast(ray, out hit, distanciaMaxima))
                 {
-                    if (hit.collider.CompareTag("Cubo"))
+                    if (hit.collider.CompareTag("Cube"))
                     {
                         cuboAgarrado = hit.collider.gameObject;
                         cuboAgarrado.GetComponent<Rigidbody>().isKinematic = true;
