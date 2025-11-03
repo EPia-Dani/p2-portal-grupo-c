@@ -575,12 +575,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 303228354}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7070768, y: 0.006520773, z: -0.006520773, w: 0.7070768}
-  m_LocalPosition: {x: -5.25, y: 1.2363, z: -13.8}
-  m_LocalScale: {x: 0.2711, y: 1, z: 0.2473}
+  m_LocalRotation: {x: 0.7070767, y: 0.006520772, z: -0.006520772, w: 0.7070767}
+  m_LocalPosition: {x: -0.05415678, y: -0.64510024, z: -0.468647}
+  m_LocalScale: {x: 0.27110004, y: 1, z: 0.24730006}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 529666021}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: -1.057}
 --- !u!1001 &310493609
 PrefabInstance:
@@ -862,6 +862,39 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d171ec5652f4bf146bb3af079472b2ac, type: 3}
+--- !u!1 &529666020
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 529666021}
+  m_Layer: 0
+  m_Name: BluePortal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &529666021
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529666020}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.195843, y: 1.8814002, z: -13.331353}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 303228358}
+  - {fileID: 1464984678}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &566830194 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4337061497069830, guid: d171ec5652f4bf146bb3af079472b2ac,
@@ -3075,12 +3108,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1464984674}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.2, y: 1.14, z: -13.89}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0041565895, y: -0.74140024, z: -0.55864716}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 529666021}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1476299159
 PrefabInstance:
@@ -4261,5 +4294,4 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 6196871533931206447}
   - {fileID: 1574882113}
-  - {fileID: 303228358}
-  - {fileID: 1464984678}
+  - {fileID: 529666021}
