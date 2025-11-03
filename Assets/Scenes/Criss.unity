@@ -988,7 +988,6 @@ MonoBehaviour:
   puertaIzquierda: {fileID: 1004911036}
   puertaDerecha: {fileID: 209586331}
   anguloApertura: 90
-  velocidad: 90
 --- !u!1001 &351445995
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1359,6 +1358,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5c4c8dcc12aea744a8fd42b64f45aced, type: 3}
+--- !u!4 &510658442 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4287006057314572, guid: 5c4c8dcc12aea744a8fd42b64f45aced,
+    type: 3}
+  m_PrefabInstance: {fileID: 510658437}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &510658446 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4304419585206216, guid: 5c4c8dcc12aea744a8fd42b64f45aced,
+    type: 3}
+  m_PrefabInstance: {fileID: 510658437}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &515405238
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1590,10 +1601,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 178df9a0a0e457f47a7371b651beaa1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puertaIzquierda: {fileID: 0}
-  puertaDerecha: {fileID: 0}
+  puertaIzquierda: {fileID: 510658446}
+  puertaDerecha: {fileID: 510658442}
   anguloApertura: 90
-  velocidad: 90
 --- !u!1001 &645664644
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2027,7 +2037,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &858178319
 CapsuleCollider:
@@ -3026,6 +3036,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 533010806939291143, guid: bfd644a7bccd7f54fa7fc3378932bf9c,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 6196871532294542253, guid: bfd644a7bccd7f54fa7fc3378932bf9c,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -3341,6 +3356,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: portalbutton
+      objectReference: {fileID: 0}
+    - target: {fileID: 3078291143891577158, guid: 9161b4acbce645f44a1baf018d76969b,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 18.97
       objectReference: {fileID: 0}
     - target: {fileID: 9220517119619060142, guid: 9161b4acbce645f44a1baf018d76969b,
         type: 3}
