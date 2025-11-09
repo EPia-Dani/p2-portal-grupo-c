@@ -16,6 +16,7 @@ Shader "Hidden/PortalShader"
 
         Fog{ Mode Off }
 
+
         Pass
         {
             CGPROGRAM
@@ -59,5 +60,5 @@ Shader "Hidden/PortalShader"
             ENDCG
         }
     }
-}
+    }
 
