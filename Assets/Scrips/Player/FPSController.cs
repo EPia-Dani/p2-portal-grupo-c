@@ -32,7 +32,7 @@ public class FPSController : MonoBehaviour
         PlayerInputHandler.LookDelta += OnLookDelta;
         PlayerInputHandler.SprintChanged += OnSprintChanged;
         PlayerInputHandler.JumpRequest += OnJumpRequested;
-        PlayerInputHandler.AimingChanged += OnAimingChanged;
+        //PlayerInputHandler.AimingChanged += OnAimingChanged;
 
 
     }
@@ -42,7 +42,7 @@ public class FPSController : MonoBehaviour
         PlayerInputHandler.LookDelta -= OnLookDelta;
         PlayerInputHandler.SprintChanged -= OnSprintChanged;
         PlayerInputHandler.JumpRequest -= OnJumpRequested;
-        PlayerInputHandler.AimingChanged -= OnAimingChanged;
+        //PlayerInputHandler.AimingChanged -= OnAimingChanged;
 
     }
     void Start()

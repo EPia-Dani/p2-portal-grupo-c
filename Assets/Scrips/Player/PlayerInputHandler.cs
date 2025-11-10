@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    public static event Action<bool> AimingChanged;
-    public static event Action<bool> ShootingHeldChanged;
+    public static event Action<bool> ShootingBluePortal;
+    public static event Action<bool> ShootingOrangePortal;
 
     public static event Action<Vector2> MoveChanged;
     public static event Action<Vector2> LookDelta;
@@ -14,22 +14,11 @@ public class PlayerInputHandler : MonoBehaviour
     public static event Action RestarGame;
     private bool playerDead = false;
 
-    private void OnEnable()
-    {
-        //RedButton.RedButtonArea += UpdateRedButtonArea;
-        //PlayerStats.OnPlayerDeath += () => playerDead = true;
-    }
-    private void OnDisable()
-    {
-        //RedButton.RedButtonArea -= UpdateRedButtonArea;
-        //PlayerStats.OnPlayerDeath -= () => playerDead = true;
-
-    }
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
     private static void ResetStatics()
     {
-        AimingChanged = null;
-        ShootingHeldChanged = null;
+        ShootingBluePortal = null;
+        ShootingOrangePortal = null;
       
 
         MoveChanged = null;
@@ -39,16 +28,16 @@ public class PlayerInputHandler : MonoBehaviour
 
     }
 
-    public void OnAim(InputAction.CallbackContext c)
+    public void OnShootBlue(InputAction.CallbackContext c)
     {
-        if (c.started) { AimingChanged?.Invoke(true); }
-        if (c.canceled) { AimingChanged?.Invoke(false); }
+        Debug.Log("Shooting Blue Portal");
     }
 
-    public void OnShoot(InputAction.CallbackContext c)
+    public void OnShootOrange(InputAction.CallbackContext c)
     {
-        Debug.Log("Shooting Input Detected");
+        Debug.Log("Shooting Orange Portal");
     }
+
     public void OnMove(InputAction.CallbackContext c)
     {
         if (c.performed || c.canceled)
