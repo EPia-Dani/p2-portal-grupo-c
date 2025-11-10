@@ -1,65 +1,71 @@
 using UnityEngine;
 
-public class arma_script : MonoBehaviour
+public class RayDebug : MonoBehaviour
 {
+    public float distancia = 5f;     
+    public float fuerza = 700f;       
+    private GameObject cub;        
+    private Rigidbody rbCub;       
 
-    [SerializeField] public float distanciaMaxima = 5f;
-    public Transform puntoFlotante;
-    [SerializeField] public float velocidadFlotante = 10f;
-    private GameObject cuboAgarrado;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
+        // rallo para ver linea, luego quitar
+        //Debug.DrawRay(transform.position, -transform.forward * distancia, Color.red);
+
+        // si hay cubo que se quede delante 1m
+        if (cub != null)
+        {
+            cub.transform.position = transform.position + -transform.forward * 2f;
+        }
+
+       
         if (Input.GetMouseButtonDown(0))
         {
-            if (cuboAgarrado == null)
+            if (cub == null)
             {
-                //camara por aliniacion
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit, distanciaMaxima))
-                {
-                    if (hit.collider.CompareTag("Cube"))
-                    {
-                        cuboAgarrado = hit.collider.gameObject;
-                        cuboAgarrado.GetComponent<Rigidbody>().isKinematic = true;
-                    }
-                }
+                IntentarAgarrar();
             }
             else
             {
-                // lanza el cubo 
-                //iskinematic igual a flase para que responda a las fisicas gravedad y eso
-                cuboAgarrado.GetComponent<Rigidbody>().isKinematic = false;
-                cuboAgarrado.transform.position = puntoFlotante.position;
-                cuboAgarrado.GetComponent<Rigidbody>().AddForce(transform.forward * 500);
-                cuboAgarrado = null;
+                DispararObjeto();
             }
         }
-        else if (Input.GetMouseButtonDown(1) && cuboAgarrado != null)
+        else if (Input.GetMouseButtonDown(1) && cub != null)
         {
-            // Soltar el cubo 
-            cuboAgarrado.GetComponent<Rigidbody>().isKinematic = false;
-            cuboAgarrado = null;
+            SoltarObjeto();
         }
+    }
 
-        // flotando delante 
-        if (cuboAgarrado != null)
+    void IntentarAgarrar()
+    {
+        RaycastHit hit;
+        
+        if (Physics.Raycast(transform.position, -transform.forward, out hit, distancia))
         {
-            cuboAgarrado.transform.position = Vector3.Lerp(
-                cuboAgarrado.transform.position,
-                puntoFlotante.position,
-                Time.deltaTime * velocidadFlotante
-            );
+            //tag
+            if (hit.collider.CompareTag("Cube") || hit.collider.CompareTag("Turret"))
+            {
+                cub = hit.collider.gameObject;
+                rbCub = cub.GetComponent<Rigidbody>();
+                rbCub.useGravity = false;
+                //rbCub.linearVelocity = Vector3.zero;
+            }
         }
+    }
 
+    void DispararObjeto()
+    {
+        rbCub.useGravity = true;
+        rbCub.AddForce(-transform.forward * fuerza);
+        cub = null;
+        rbCub = null;
+    }
+
+    void SoltarObjeto()
+    {
+        rbCub.useGravity = true;
+        cub = null;
+        rbCub = null;
     }
 }

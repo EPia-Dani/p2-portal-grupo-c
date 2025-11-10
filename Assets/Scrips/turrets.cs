@@ -47,25 +47,20 @@ public class turrets : MonoBehaviour
         {
             laser.SetPosition(1, hit.point);
 
-            // laser toca jugador muere 
-            if (hit.collider.gameObject == player)
+            // El láser toca al jugador, lo elimina
+            if (hit.collider.CompareTag("Player"))
             {
-                
-                Destroy(player); 
+                Debug.Log("player torret");
+                Destroy(hit.collider.gameObject);
             }
+            
 
             // Si el láser toca otra torreta, la destruye
             turrets otherTurret = hit.collider.GetComponent<turrets>();
-
-            // Si no lo encuentra en el objeto directo, busca en el padre
             if (otherTurret == null)
             {
-                Debug.Log("null torret");
-
                 otherTurret = hit.collider.GetComponentInParent<turrets>();
             }
-
-            // Si encontró otra torreta y no es esta misma
             if (otherTurret != null && otherTurret != this)
             {
                 Debug.Log("Torreta destruida por láser");
@@ -78,36 +73,20 @@ public class turrets : MonoBehaviour
         }
     }
 
-  
+
 
     private void OnCollisionEnter(Collision collision)
     {
         // torreta golpeada por  cubo o  torreta desactivamos toore
-        if (collision.gameObject == cube || collision.gameObject == turret)
+        if (collision.gameObject.CompareTag("Cube"))
         {
+            Debug.Log("Torreta desactivada por colisión con cubo");
             isActive = false; 
+            laser.enabled = false;
+
         }
+       
     }
 
-    public void CogerTorret(Transform gravityGun)
-    {
-        // coger torret
-        torretSost = true;
-        //desactyivar laser mientras la tenga sugetada
-        isActive = false; 
-        transform.SetParent(gravityGun);
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
-
-        // laser hacia adelante
-        puntoT.forward = gravityGun.forward;
-    }
-
-    public void SoltarTorret()
-    {
-        // Suelta la torreta y reactiva laser
-        torretSost = false;
-        isActive = true; 
-        transform.SetParent(null);
-    }
+   
 }
