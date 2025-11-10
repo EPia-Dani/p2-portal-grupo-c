@@ -6,12 +6,20 @@ public class boton_script : MonoBehaviour
     public Surtidor_script surtidor;
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Cube"))
         {
-            Debug.Log("detecto player");
-            surtidor.SoltarCubo();
+            Rigidbody rb = other.GetComponent<Rigidbody>();
+            if (rb != null && rb.linearVelocity.magnitude < 0.1f)
+            {
+                Debug.Log("Cubo");
+                surtidor.SoltarCubo();
+            }
         }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        surtidor.ResetI();
     }
 }

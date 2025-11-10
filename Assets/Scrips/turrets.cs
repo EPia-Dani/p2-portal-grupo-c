@@ -13,10 +13,7 @@ public class turrets : MonoBehaviour
       void Start()
     {
 
-        if (GetComponent<Collider>() == null)
-        {
-            gameObject.AddComponent<BoxCollider>();
-        }
+        
         //laser
         laser = gameObject.AddComponent<LineRenderer>();
         laser.startWidth = 0.05f; // Ancho inicial del láser
@@ -78,9 +75,9 @@ public class turrets : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // torreta golpeada por  cubo o  torreta desactivamos toore
-        if (collision.gameObject.CompareTag("Cube"))
+        if (collision.gameObject.CompareTag("Cube") || collision.gameObject.CompareTag("Turret"))
         {
-            Debug.Log("Torreta desactivada por colisión con cubo");
+            Debug.Log("Torreta desactivada por colisión");
             isActive = false; 
             laser.enabled = false;
 
