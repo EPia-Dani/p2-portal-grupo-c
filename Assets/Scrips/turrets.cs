@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class turrets : MonoBehaviour
 {
-    public LineRenderer laser; // laser
-    public Transform puntoT; //punto torre disparo
+    public LineRenderer laser; 
+    public Transform puntoT; 
     public GameObject player; 
     public GameObject turret;
     public GameObject cube; 
-    public float laserRange = 20f; // Alcance del láser
-    public bool isActive = true; //ESTADO TORRE6A
+    public float laserRange = 20f; 
+    public bool isActive = true;
     public bool torretSost = false; 
       void Start()
     {
@@ -16,10 +16,10 @@ public class turrets : MonoBehaviour
         
         //laser
         laser = gameObject.AddComponent<LineRenderer>();
-        laser.startWidth = 0.05f; // Ancho inicial del láser
-        laser.endWidth = 0.05f; // Ancho final del láser
-        laser.material = new Material(Shader.Find("Unlit/Color")); // Material 
-        laser.material.color = Color.red; // Color 
+        laser.startWidth = 0.05f; 
+        laser.endWidth = 0.05f; 
+        laser.material = new Material(Shader.Find("Unlit/Color")); 
+        laser.material.color = Color.red; 
     }
   
      void Update()
@@ -44,7 +44,7 @@ public class turrets : MonoBehaviour
         {
             laser.SetPosition(1, hit.point);
 
-            // El láser toca al jugador, lo elimina
+            // El láser toca al jugador, lo elimina cambiar a gzame object
             if (hit.collider.CompareTag("Player"))
             {
                 Debug.Log("player torret");
@@ -52,7 +52,7 @@ public class turrets : MonoBehaviour
             }
             
 
-            // Si el láser toca otra torreta, la destruye
+            // Si el láser toca otra torreta la destryte 
             turrets otherTurret = hit.collider.GetComponent<turrets>();
             if (otherTurret == null)
             {

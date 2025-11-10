@@ -14,17 +14,16 @@ public class RayDebug : MonoBehaviour
     void Update()
     {
         grab = new Vector3(transform.position.x, transform.position.y - 0.6f, transform.position.z);
-        // rallo para ver linea, luego quitar
+        // rayo para ver linea, luego quitar
         Debug.DrawRay(grab, -transform.forward * distancia, Color.red);
 
         if (item != null && item.CompareTag("Turret"))
         {
             item.transform.rotation = player.rotation;
             Vector3 destino = transform.position + -transform.forward * 1.5f;
-            //rbItem.MovePosition(destino);
         }
 
-        // si hay cubo que se quede delante 1m
+        // si hay cubo que se quede delante
         if (item != null)
         {
             item.transform.position = grab + -transform.forward * 3f;
@@ -60,7 +59,6 @@ public class RayDebug : MonoBehaviour
                 item = hit.collider.gameObject;
                 rbItem = item.GetComponent<Rigidbody>();
                 rbItem.useGravity = false;
-                //rbCub.linearVelocity = Vector3.zero;
                 if (hit.collider.CompareTag("Turret"))
                 {
                     item.transform.rotation = player.rotation;
