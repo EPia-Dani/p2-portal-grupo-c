@@ -1458,11 +1458,7 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8110145745232728036, guid: fd7c1ff5180ee644184ad45075fa8df8, type: 3}
-    - {fileID: 8738750058754795515, guid: fd7c1ff5180ee644184ad45075fa8df8, type: 3}
-    - {fileID: 8188087148108160287, guid: fd7c1ff5180ee644184ad45075fa8df8, type: 3}
-    - {fileID: 3987855164932797194, guid: fd7c1ff5180ee644184ad45075fa8df8, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1921,7 +1917,7 @@ PrefabInstance:
     - target: {fileID: 65051011024009300, guid: 200e4cad0f905f24791cbd4a39d80432,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1970,7 +1966,7 @@ MonoBehaviour:
   mPitchController: {fileID: 1553106072}
   playerCamera: {fileID: 963194227}
   maxSpeed: 10
-  rotationSpeed: 10
+  rotationSpeed: 25
   InvertPitch: 0
   maxPitch: 0
   minPitch: 0

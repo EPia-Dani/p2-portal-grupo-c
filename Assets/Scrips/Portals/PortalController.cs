@@ -5,69 +5,84 @@ using UnityEngine;
 public class PortalController : MonoBehaviour
 {
     [Header("Refs")]
-    [SerializeField] private Transform player;
-    [SerializeField] private Camera playerCamera;
-    public PortalController mirrorPortal;
-    public Camera reflectionCamera;
+    [SerializeField] private Transform player;          // Root del jugador (donde vive el CC/Rigidbody)
+    [SerializeField] private Camera playerCamera;       // Cámara del jugador (si no, se busca por tag)
+    public PortalController mirrorPortal;               // Portal destino
+    public Camera reflectionCamera;                     // Cámara “remota” del portal destino
 
     [Header("Tuning")]
-    [SerializeField] private float exitOffset = 0.3f;
-    [SerializeField] private float reenterCooldown = 0.2f;
+    [SerializeField] private float exitOffset = 0.3f;   // Empuje para salir del trigger destino
+    [SerializeField] private float reenterCooldown = 0.2f; // Cooldown sin corutinas (segundos)
+    [SerializeField] private float offsetNearPlane = 0.05f; // Clip extra para la cámara remota
 
-    // 👉 en vez de un bool, contamos colliders del player dentro
+    // Control robusto de presencia del player dentro del trigger (varios colliders)
     private readonly HashSet<Collider> _playerParts = new HashSet<Collider>();
-    private bool _cooldown;
-    private float offsetNearPlane;
 
-    void Awake()
+    // Cooldown sin IEnumerator
+    private float cooldownTimer = 0f;
+
+    private void Awake()
     {
         var col = GetComponent<BoxCollider>();
         col.isTrigger = true;
 
-        // 👉 haz el trigger “solo delante” y con grosor
+        // Trigger “con grosor” y un poco por delante del plano del portal
         if (col.size.z < 0.2f) col.size = new Vector3(col.size.x, col.size.y, 0.2f);
         col.center = new Vector3(col.center.x, col.center.y, Mathf.Abs(col.size.z) * 0.5f);
     }
 
-    void Start()
+    private void Start()
     {
         if (!playerCamera)
-            playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera")?.GetComponent<Camera>();
+        {
+            var go = GameObject.FindGameObjectWithTag("PlayerCamera");
+            if (go) playerCamera = go.GetComponent<Camera>();
+        }
     }
 
-    void OnTriggerEnter(Collider other)
+    private void Update()
+    {
+        // Cooldown sin corutinas
+        if (cooldownTimer > 0f) cooldownTimer -= Time.deltaTime;
+    }
+
+    private void OnTriggerEnter(Collider other)
     {
         if (!BelongsToPlayer(other)) return;
 
         _playerParts.Add(other);
 
-        // Según el PDF: teletransportar cuando el player entra en el collider del portal
-        // + pequeño offset de salida para salir del trigger destino. :contentReference[oaicite:1]{index=1}
-        if (!_cooldown)
+        // Teletransportar al entrar, si no hay cooldown activo
+        if (cooldownTimer <= 0f)
         {
             TeleportPlayer();
-            StartCoroutine(Cooldown());
-            mirrorPortal.StartCoroutine(mirrorPortal.Cooldown());
+
+            // Activar cooldown local y sincronizar con el portal espejo
+            cooldownTimer = reenterCooldown;
+            if (mirrorPortal != null)
+                mirrorPortal.cooldownTimer = mirrorPortal.reenterCooldown;
         }
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if (!BelongsToPlayer(other)) return;
         _playerParts.Remove(other);
-        // playerIsOverlapping = _playerParts.Count > 0;  // si lo necesitas para UI/debug
     }
 
     private bool BelongsToPlayer(Collider c)
     {
-        // robusto: acepta colliders hijos del player
+        // Acepta colliders hijos del player (robusto)
         return player && c.transform.root == player.root;
-        // alternativamente: return c.transform.root.CompareTag("Player");
+        // Alternativa por tag:
+        // return c.transform.root.CompareTag("Player");
     }
 
     private void TeleportPlayer()
     {
-        // 1) Local respecto al “portal virtual” (flip Z)
+        if (player == null || mirrorPortal == null) return;
+
+        // 1) Posición/dirección en local del “portal virtual” (flip Z)
         Vector3 lPos = transform.InverseTransformPoint(player.position);
         lPos.z = -lPos.z;
 
@@ -75,31 +90,83 @@ public class PortalController : MonoBehaviour
         lDir.z = -lDir.z;
 
         // 2) Transformar por el portal espejo
-        player.position = mirrorPortal.transform.TransformPoint(lPos);
-        player.forward = mirrorPortal.transform.TransformDirection(lDir);
+        Vector3 targetPos = mirrorPortal.transform.TransformPoint(lPos);
+        Vector3 targetFwd = mirrorPortal.transform.TransformDirection(lDir);
 
-        // 3) Empuje para salir del trigger destino (evita re-disparo)
-        player.position += player.forward * exitOffset;  // :contentReference[oaicite:2]{index=2}
+        // Componentes de movimiento del player
+        var cc = player.GetComponent<CharacterController>();
+        var rb = player.GetComponent<Rigidbody>();
+
+        if (cc != null)
+        {
+            // Evitar que el CC deshaga el movimiento ese frame
+            cc.enabled = false;
+            player.SetPositionAndRotation(
+                targetPos,
+                Quaternion.LookRotation(targetFwd, player.up)
+            );
+            // Empuje de salida para no re-disparar el trigger destino
+            player.position += targetFwd * exitOffset;
+            Physics.SyncTransforms();
+            cc.enabled = true;
+
+            // Si tu controller usa yaw interno, actualízalo aquí (p.ej., mYaw = eulerAngles.y).
+        }
+        else if (rb != null)
+        {
+            // Teleport limpio con Rigidbody
+            bool wasKinematic = rb.isKinematic;
+            rb.isKinematic = true;
+
+            player.SetPositionAndRotation(
+                targetPos,
+                Quaternion.LookRotation(targetFwd, player.up)
+            );
+            player.position += targetFwd * exitOffset;
+            Physics.SyncTransforms();
+
+            rb.isKinematic = wasKinematic;
+
+            // Si el RB es dinámico, mapear velocidad a través del portal
+            if (!rb.isKinematic)
+            {
+                Vector3 localVel = transform.InverseTransformDirection(rb.linearVelocity);
+                localVel.z = -localVel.z;
+                rb.linearVelocity = mirrorPortal.transform.TransformDirection(localVel);
+            }
+        }
+        else
+        {
+            // Transform puro (sin CC ni RB)
+            player.SetPositionAndRotation(
+                targetPos,
+                Quaternion.LookRotation(targetFwd, player.up)
+            );
+            player.position += targetFwd * exitOffset;
+            Physics.SyncTransforms();
+        }
+
+        // Debug útil
+        // Debug.Log($"Teleported to {player.position} facing {player.forward}");
     }
 
-    private System.Collections.IEnumerator Cooldown()
+    private void LateUpdate()
     {
-        _cooldown = true;
-        yield return new WaitForSeconds(reenterCooldown);
-        _cooldown = false;
-    }
+        if (!playerCamera || mirrorPortal == null || mirrorPortal.reflectionCamera == null) return;
 
-    private void LateUpdate() 
-    { 
-        Vector3 worldPosition = playerCamera.transform.position;
-        Vector3 localPosition = transform.InverseTransformPoint(worldPosition);
-        localPosition.z = -localPosition.z;
-        mirrorPortal.reflectionCamera.transform.position = mirrorPortal.transform.TransformPoint(localPosition);
-        Vector3 worldDirection = playerCamera.transform.forward;
-        Vector3 localDirection = transform.InverseTransformDirection(worldDirection);
-        localDirection.z = -localDirection.z;
-        mirrorPortal.reflectionCamera.transform.forward = mirrorPortal.transform.TransformDirection(localDirection);
-        float distance = Vector3.Distance(mirrorPortal.reflectionCamera.transform.position, mirrorPortal.transform.position);
-        mirrorPortal.reflectionCamera.nearClipPlane = Mathf.Max(0.0f, distance) + offsetNearPlane; 
+        // ====== Render de la cámara remota (portal espejo) ======
+        Vector3 camWorldPos = playerCamera.transform.position;
+        Vector3 camLocalPos = transform.InverseTransformPoint(camWorldPos);
+        camLocalPos.z = -camLocalPos.z;
+        mirrorPortal.reflectionCamera.transform.position = mirrorPortal.transform.TransformPoint(camLocalPos);
+
+        Vector3 camWorldFwd = playerCamera.transform.forward;
+        Vector3 camLocalDir = transform.InverseTransformDirection(camWorldFwd);
+        camLocalDir.z = -camLocalDir.z;
+        mirrorPortal.reflectionCamera.transform.forward = mirrorPortal.transform.TransformDirection(camLocalDir);
+
+        // nearClipPlane: distancia cámara jugador ↔ portal de entrada + offset
+        float distCamToThisPortal = Vector3.Distance(playerCamera.transform.position, transform.position);
+        mirrorPortal.reflectionCamera.nearClipPlane = Mathf.Max(0f, distCamToThisPortal) + offsetNearPlane;
     }
 }
