@@ -134,7 +134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1536690833083362, guid: 200e4cad0f905f24791cbd4a39d80432, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4920630275744480, guid: 200e4cad0f905f24791cbd4a39d80432, type: 3}
       propertyPath: m_RootOrder
@@ -970,9 +970,81 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1574882113}
     m_Modifications:
+    - target: {fileID: 1090267124810302, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1123801922869474, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1192226923666492, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1225558055441180, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1334812633366524, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1452736059441552, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1576588230827492, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1619830145420496, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1624100492616824, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1651941897023474, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1810096725708318, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1857788396592512, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1885027781276578, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1892555021507036, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
       propertyPath: m_Name
       value: Environment
+      objectReference: {fileID: 0}
+    - target: {fileID: 1892555021507036, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1908592203681834, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1912646620925874, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1954718603280014, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1988894273669046, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4747098585464204, guid: 02a3fadbfbe6636439813bc36180b0cd, type: 3}
       propertyPath: m_RootOrder
@@ -1362,6 +1434,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: OrangePortal
       objectReference: {fileID: 0}
+    - target: {fileID: 922164394472402059, guid: fd7c1ff5180ee644184ad45075fa8df8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1613760434447234970, guid: fd7c1ff5180ee644184ad45075fa8df8,
         type: 3}
       propertyPath: m_Name
@@ -1390,7 +1467,7 @@ PrefabInstance:
     - target: {fileID: 4502465945699414361, guid: fd7c1ff5180ee644184ad45075fa8df8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.348461
+      value: 2.16
       objectReference: {fileID: 0}
     - target: {fileID: 4502465945699414361, guid: fd7c1ff5180ee644184ad45075fa8df8,
         type: 3}
@@ -2154,12 +2231,17 @@ MonoBehaviour:
   portalSpawnMask:
     serializedVersion: 2
     m_Bits: 64
-  range: 100
-  bluePortalPrefab: {fileID: 1746189979}
-  orangePortalPrefab: {fileID: 1131066729}
   invalidLayers:
     serializedVersion: 2
     m_Bits: 128
+  range: 100
+  bluePortalPrefab: {fileID: 1746189979}
+  orangePortalPrefab: {fileID: 1131066729}
+  portalLimitTag: PortalLimit
+  surfaceEpsilon: 0.015
+  checkDepth: 0.35
+  verboseDebug: 1
+  drawRayTime: 1
 --- !u!4 &945094714 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4079024185925350, guid: 207ade7b2f633eb468ca66c61473a72c,
