@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 922164394472402059}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -2.479, y: 1.36, z: 7.38}
+  m_LocalPosition: {x: -2.479, y: 1.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -81,8 +81,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.2927515, y: 2.375088, z: 1.0521245}
-  m_Center: {x: -0.35362396, y: -0.7238084, z: -0.94380903}
+  m_Size: {x: 0.2927515, y: 2.375088, z: 1.0502566}
+  m_Center: {x: -0.35362396, y: -0.7238084, z: -0.48230845}
 --- !u!65 &8738750058754795515
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -102,8 +102,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.9856551, y: 0.21270227, z: 1.0087544}
-  m_Center: {x: 0.6208619, y: 0.5153949, z: -0.9219673}
+  m_Size: {x: 1.9856551, y: 0.21270227, z: 0.9070331}
+  m_Center: {x: 0.6208619, y: 0.5153949, z: -0.32008678}
 --- !u!65 &8188087148108160287
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -123,8 +123,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.35472944, y: 2.3566613, z: 1.0516775}
-  m_Center: {x: 1.7727773, y: -0.6783304, z: -0.9689739}
+  m_Size: {x: 0.35472956, y: 2.3566613, z: 1.0357503}
+  m_Center: {x: 1.7727773, y: -0.6783304, z: -0.52454144}
 --- !u!65 &3987855164932797194
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -144,8 +144,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.2219658, y: 0.16840744, z: 1.0898167}
-  m_Center: {x: 0.6109829, y: -1.7967112, z: -0.969899}
+  m_Size: {x: 2.2219658, y: 0.16840744, z: 1.0923961}
+  m_Center: {x: 0.6109829, y: -1.7967112, z: -0.54303473}
 --- !u!65 &5412421553030035925
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -165,8 +165,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.96755934, y: 1.337468, z: 0.3666075}
-  m_Center: {x: 1.0310861, y: -0.53660244, z: -0.31669635}
+  m_Size: {x: 1.3551054, y: 1.337468, z: 0.34483418}
+  m_Center: {x: 0.837313, y: -0.53660244, z: 0.12105861}
 --- !u!1 &1613760434447234970
 GameObject:
   m_ObjectHideFlags: 0
@@ -332,7 +332,7 @@ Transform:
   m_GameObject: {fileID: 2861627684652576699}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7070767, y: 0.006520772, z: -0.006520772, w: 0.7070767}
-  m_LocalPosition: {x: 0.711, y: -0.64510024, z: -0.468647}
+  m_LocalPosition: {x: 0.711, y: -0.64510024, z: 0}
   m_LocalScale: {x: 0.27110004, y: 1, z: 0.24730006}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -424,7 +424,7 @@ GameObject:
   - component: {fileID: 6493706009502400998}
   m_Layer: 0
   m_Name: PortalLimit (1)
-  m_TagString: Untagged
+  m_TagString: PortalLimit
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -438,7 +438,7 @@ Transform:
   m_GameObject: {fileID: 4127298100356203419}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.651, y: -0.588, z: -0.483}
+  m_LocalPosition: {x: 1.5963, y: -0.588, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -455,7 +455,7 @@ GameObject:
   - component: {fileID: 8336233528131308893}
   m_Layer: 0
   m_Name: PortalLimit (3)
-  m_TagString: Untagged
+  m_TagString: PortalLimit
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -469,7 +469,7 @@ Transform:
   m_GameObject: {fileID: 7315126242867269605}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.726, y: -1.669, z: -0.483}
+  m_LocalPosition: {x: 0.726, y: -1.614, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -486,7 +486,7 @@ GameObject:
   - component: {fileID: 1972210386611040163}
   m_Layer: 0
   m_Name: PortalLimit (2)
-  m_TagString: Untagged
+  m_TagString: PortalLimit
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -500,7 +500,7 @@ Transform:
   m_GameObject: {fileID: 7531963916290844167}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.726, y: 0.374, z: -0.483}
+  m_LocalPosition: {x: 0.726, y: 0.488, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -517,7 +517,7 @@ GameObject:
   - component: {fileID: 8366135097000962117}
   m_Layer: 0
   m_Name: PortalLimit
-  m_TagString: Untagged
+  m_TagString: PortalLimit
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -531,7 +531,7 @@ Transform:
   m_GameObject: {fileID: 8308302676266540428}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.187, y: -0.588, z: -0.483}
+  m_LocalPosition: {x: -0.2196, y: -0.588, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

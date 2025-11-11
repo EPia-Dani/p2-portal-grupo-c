@@ -30,12 +30,14 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void OnShootBlue(InputAction.CallbackContext c)
     {
-        Debug.Log("Shooting Blue Portal");
+        if (c.started)            
+            ShootingBluePortal?.Invoke(true);
     }
 
     public void OnShootOrange(InputAction.CallbackContext c)
     {
-        Debug.Log("Shooting Orange Portal");
+        if (c.started)
+            ShootingOrangePortal?.Invoke(true);
     }
 
     public void OnMove(InputAction.CallbackContext c)
