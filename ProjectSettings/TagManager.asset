@@ -8,6 +8,7 @@ TagManager:
   - PlayerCamera
   - Turret
   - PortalLimit
+  - TeleportPoint
   layers:
   - Default
   - TransparentFX

@@ -5,18 +5,36 @@ using UnityEngine;
 public class PortalController : MonoBehaviour
 {
     [Header("Refs")]
-    [SerializeField] private Transform player;          
-    [SerializeField] private Camera playerCamera;       
-    public PortalController mirrorPortal;               
-    public Camera reflectionCamera;                     
+    public Transform player;
+    public Camera playerCamera;
+    public PortalController mirrorPortal;
+    public Camera reflectionCamera;
 
     [Header("Tuning")]
-    [SerializeField] private float exitOffset = 0.3f;   
-    [SerializeField] private float reenterCooldown = 0.2f; 
-    [SerializeField] private float offsetNearPlane = 0.05f; 
+    [SerializeField] private float exitOffset = 0.3f;
+    [SerializeField] private float reenterCooldown = 0.2f;
+    [SerializeField] private float offsetNearPlane = 0.05f;
 
-    
+
+    [SerializeField]private GameObject portalSurface;
     private float cooldownTimer = 0f;
+
+    private void OnEnable()
+    {
+        PlayerDetection.TeleportationRequest += TeleportationRequest;
+    }
+    private void OnDisable()
+    {
+        PlayerDetection.TeleportationRequest -= TeleportationRequest;
+    }
+
+    private void TeleportationRequest(PortalController source)
+    {
+        // SOLO el portal que disparó el evento debe teletransportar
+        if (source != this) return;
+        if (cooldownTimer > 0f || mirrorPortal == null || player == null) return;
+        TeleportPlayer();
+    }
 
     private void Update()
     {
@@ -25,16 +43,20 @@ public class PortalController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (cooldownTimer <= 0f)
+        if (portalSurface != null && mirrorPortal != null) 
         {
-            TeleportPlayer();
-            cooldownTimer = reenterCooldown;
-            if (mirrorPortal != null)
-            {
-                mirrorPortal.cooldownTimer = mirrorPortal.reenterCooldown;
-            }
+            Collider wallCol = portalSurface.GetComponent<Collider>();
+            if (wallCol != null)
+                wallCol.enabled = false;
         }
     }
+
+
+    private void OnTriggerExit(Collider other)
+    {
+        portalSurface.GetComponent<Collider>().enabled = true;
+    }
+
 
     private void TeleportPlayer()
     {
@@ -54,7 +76,7 @@ public class PortalController : MonoBehaviour
         // Componentes de movimiento del player
         var cc = player.GetComponent<CharacterController>();
 
-        
+
         // Evitar que el CC deshaga el movimiento ese frame
         cc.enabled = false;
         player.SetPositionAndRotation(
@@ -62,7 +84,7 @@ public class PortalController : MonoBehaviour
             Quaternion.LookRotation(targetFwd, player.up)
         );
         // Empuje de salida para no re-disparar el trigger destino
-        player.position += targetFwd * exitOffset;
+        //player.position += targetFwd * exitOffset;
         Physics.SyncTransforms();
         cc.enabled = true;
     }
@@ -84,5 +106,10 @@ public class PortalController : MonoBehaviour
 
         float distCamToThisPortal = Vector3.Distance(playerCamera.transform.position, transform.position);
         mirrorPortal.reflectionCamera.nearClipPlane = Mathf.Max(0f, distCamToThisPortal) + offsetNearPlane;
+    }
+
+    public void SetPortalSurface(GameObject surface)
+    {
+        portalSurface = surface;
     }
 }
