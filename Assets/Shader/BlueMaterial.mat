@@ -23,6 +23,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _FrontTex:
+        m_Texture: {fileID: 2800000, guid: 11de5e208d5034d41a074d9541cc9972, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 8400000, guid: 09bad3f12f155a448a86a240446ae11f, type: 2}
         m_Scale: {x: 1, y: 1}
