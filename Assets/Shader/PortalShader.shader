@@ -60,5 +60,5 @@ Shader "Hidden/PortalShader"
             ENDCG
         }
     }
-    }
+}
 

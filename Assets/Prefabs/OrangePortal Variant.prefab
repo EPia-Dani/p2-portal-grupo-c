@@ -25,8 +25,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 975133794044195085, guid: fd7c1ff5180ee644184ad45075fa8df8,
         type: 3}
+      propertyPath: m_Size.x
+      value: 3.3022327
+      objectReference: {fileID: 0}
+    - target: {fileID: 975133794044195085, guid: fd7c1ff5180ee644184ad45075fa8df8,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 2.7084548
+      objectReference: {fileID: 0}
+    - target: {fileID: 975133794044195085, guid: fd7c1ff5180ee644184ad45075fa8df8,
+        type: 3}
       propertyPath: m_Size.z
       value: 0.21087508
+      objectReference: {fileID: 0}
+    - target: {fileID: 975133794044195085, guid: fd7c1ff5180ee644184ad45075fa8df8,
+        type: 3}
+      propertyPath: m_Center.x
+      value: -0.19806731
+      objectReference: {fileID: 0}
+    - target: {fileID: 975133794044195085, guid: fd7c1ff5180ee644184ad45075fa8df8,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.016080499
       objectReference: {fileID: 0}
     - target: {fileID: 975133794044195085, guid: fd7c1ff5180ee644184ad45075fa8df8,
         type: 3}
@@ -150,24 +170,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5145470917267173595, guid: fd7c1ff5180ee644184ad45075fa8df8,
         type: 3}
-      propertyPath: SpawnPoint
-      value: 
-      objectReference: {fileID: 7186675064675864749}
-    - target: {fileID: 5145470917267173595, guid: fd7c1ff5180ee644184ad45075fa8df8,
-        type: 3}
       propertyPath: exitOffset
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 5145470917267173595, guid: fd7c1ff5180ee644184ad45075fa8df8,
-        type: 3}
-      propertyPath: spawnPoint
-      value: 
-      objectReference: {fileID: 7186675064675864749}
-    - target: {fileID: 5145470917267173595, guid: fd7c1ff5180ee644184ad45075fa8df8,
-        type: 3}
-      propertyPath: portalSurface
-      value: 
-      objectReference: {fileID: 7186675064675864749}
     - target: {fileID: 5145470917267173595, guid: fd7c1ff5180ee644184ad45075fa8df8,
         type: 3}
       propertyPath: offsetNearPlane
@@ -309,9 +314,3 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd7c1ff5180ee644184ad45075fa8df8, type: 3}
---- !u!1 &7186675064675864749 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1414219153254873113, guid: fd7c1ff5180ee644184ad45075fa8df8,
-    type: 3}
-  m_PrefabInstance: {fileID: 8078439818656671924}
-  m_PrefabAsset: {fileID: 0}

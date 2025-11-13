@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FPSController : MonoBehaviour
 {
@@ -24,29 +25,16 @@ public class FPSController : MonoBehaviour
     private float mVerticalSpeed;
     private bool isSprinting;
     private bool IsGrounded;
-    private bool isAiming;
 
     private void OnEnable()
     {
-        PlayerInputHandler.MoveChanged += OnMoveChanged;
-        PlayerInputHandler.LookDelta += OnLookDelta;
-        PlayerInputHandler.SprintChanged += OnSprintChanged;
-        PlayerInputHandler.JumpRequest += OnJumpRequested;
-        //PlayerInputHandler.AimingChanged += OnAimingChanged;
         TransportationDetection.TeleportationPlayer += Transportation;
-
-
     }
     private void OnDisable()
     {
-        PlayerInputHandler.MoveChanged -= OnMoveChanged;
-        PlayerInputHandler.LookDelta -= OnLookDelta;
-        PlayerInputHandler.SprintChanged -= OnSprintChanged;
-        PlayerInputHandler.JumpRequest -= OnJumpRequested;
-        //PlayerInputHandler.AimingChanged -= OnAimingChanged;
         TransportationDetection.TeleportationPlayer -= Transportation;
-
     }
+
     void Start()
     {
         mYaw = transform.eulerAngles.y;                       // no uses rotation.y (cuaternión)
@@ -109,30 +97,38 @@ public class FPSController : MonoBehaviour
         // 5. Sincronizar el controlador con la nueva rotación
         mYaw = transform.eulerAngles.y;
         controller.enabled = true;
+        portal.mirrorPortal.ActiveCollaider();
     }
 
-    private void OnMoveChanged(Vector2 direction)
+    void OnLook(InputValue value)
     {
-        mDirection = direction;
+        Vector2 pos = value.Get<Vector2>();//Obtiene el valor del input del raton
+        mYaw += pos.x * rotationSpeed * Time.deltaTime;//Actualiza el valor del yaw
+        mPitch += pos.y * rotationSpeed * Time.deltaTime;//Actualiza el valor del pitch (nota el signo positivo para movimiento invertido)
     }
-    private void OnLookDelta(Vector2 lookDelta)
+
+    public void OnMove(InputAction.CallbackContext context)//Esto se hace con eventos del input sistem que es mas eficiente 
     {
-        mLookDirection = lookDelta;
+        mDirection = context.ReadValue<Vector2>();//Obtiene el valor del input del teclado
     }
-    private void OnSprintChanged(bool sprinting)
+
+    public void OnLook(InputAction.CallbackContext context)
     {
-        isSprinting = sprinting;
+        mLookDirection = context.ReadValue<Vector2>();//Obtiene el valor del input del raton
+
     }
-    private void OnJumpRequested()
+
+    public void OnSprint(InputAction.CallbackContext context)
+    {
+        isSprinting = context.ReadValueAsButton();
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
     {
         if (IsGrounded)
         {
             mVerticalSpeed = jumpSpeed;
             IsGrounded = false;
         }
-    }
-    private void OnAimingChanged(bool value)
-    {
-        isAiming = value;
     }
 }

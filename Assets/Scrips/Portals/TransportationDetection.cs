@@ -4,6 +4,7 @@ using UnityEngine;
 public class TransportationDetection : MonoBehaviour
 {
     public static event Action<PortalController> TeleportationPlayer;
+    public static event Action<PortalController> TeleportationObject;
     [SerializeField] private PortalController portal;
 
     // Cooldown global para todos los portales
@@ -12,22 +13,22 @@ public class TransportationDetection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player"))
-            return;
+        if (other.CompareTag("Player"))
+        {
+            if (Time.time < nextTeleportTime)
+                return;
 
-        // Si aún estamos en cooldown, ignoramos este trigger
-        if (Time.time < nextTeleportTime)
-            return;
+            // Marcamos el próximo instante en el que se permitirá teletransportar
+            nextTeleportTime = Time.time + teleportCooldown;
 
-        // Marcamos el próximo instante en el que se permitirá teletransportar
-        nextTeleportTime = Time.time + teleportCooldown;
-
-        TeleportationPlayer?.Invoke(portal);
+            TeleportationPlayer?.Invoke(portal);
+        }
+        else
+        { 
+            TeleportationObject?.Invoke(portal);
+        }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        // No toques nada del cooldown aquí
-    }
+        
 }
 

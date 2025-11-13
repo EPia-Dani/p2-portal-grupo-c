@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class ShootingPortals : MonoBehaviour
@@ -10,6 +11,8 @@ public class ShootingPortals : MonoBehaviour
     [SerializeField] private float range = 100f;
     [SerializeField] private GameObject bluePortalPrefab;
     [SerializeField] private GameObject orangePortalPrefab;
+    [SerializeField] private bool canShoot = true;
+
 
     [Header("Placement")]
     [SerializeField] private string portalLimitTag = "PortalLimit";
@@ -30,36 +33,9 @@ public class ShootingPortals : MonoBehaviour
         if (p) playerTransform = p.transform;
     }
 
-    private void OnEnable()
-    {
-        PlayerInputHandler.ShootingBluePortal += OnShootingBluePortal;
-        PlayerInputHandler.ShootingOrangePortal += OnShootingOrangePortal;
-    }
-    private void OnDisable()
-    {
-        PlayerInputHandler.ShootingBluePortal -= OnShootingBluePortal;
-        PlayerInputHandler.ShootingOrangePortal -= OnShootingOrangePortal;
-    }
-
-    private void OnShootingBluePortal(bool isShooting)
-    {
-        if (isShooting)
-        {
-            ShootPortal(bluePortalPrefab, ref currentBluePortal);
-        }
-    }
-
-    private void OnShootingOrangePortal(bool isShooting)
-    {
-        if (isShooting)
-        {
-            ShootPortal(orangePortalPrefab, ref currentOrangePortal);
-        }
-    }
-
     private void ShootPortal(GameObject portalPrefab, ref GameObject currentPortal)
     {
-        if (!playerCamera || !portalPrefab) return;
+        if (!playerCamera || !portalPrefab || !canShoot) return;
 
         Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         if (!Physics.Raycast(ray, out RaycastHit hit, range, portalSpawnMask, QueryTriggerInteraction.Ignore))
@@ -85,7 +61,7 @@ public class ShootingPortals : MonoBehaviour
     private bool ValidatePoints(GameObject portalPrefab, RaycastHit hit, Vector3 portalPos, Quaternion portalRot)
     {
         Vector3 wallNormal = hit.normal;
-        Vector3 intoWall = - wallNormal;
+        Vector3 intoWall = -wallNormal;
 
         Transform[] trs = portalPrefab.GetComponentsInChildren<Transform>(true);
         int limitCount = 0;
@@ -135,6 +111,22 @@ public class ShootingPortals : MonoBehaviour
             pc.reflectionCamera = currentPortal.GetComponentInChildren<Camera>(true);
     }
 
+    public void OnShootBlue(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            ShootPortal(bluePortalPrefab, ref currentBluePortal);
+
+        }
+    }
+    public void OnShootOrange(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            ShootPortal(orangePortalPrefab, ref currentOrangePortal);
+
+        }
+    }
 }
 
 

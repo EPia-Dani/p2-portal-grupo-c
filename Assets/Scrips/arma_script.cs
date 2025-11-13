@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class RayDebug : MonoBehaviour
+public class arma_script : MonoBehaviour
 {
     public float distancia = 5f;     
     public float fuerza = 700f;       
@@ -8,7 +9,6 @@ public class RayDebug : MonoBehaviour
     private Rigidbody rbItem;
     private Vector3 grab;
     [SerializeField] Transform player;
-
 
 
     void Update()
@@ -34,16 +34,16 @@ public class RayDebug : MonoBehaviour
         {
             if (item == null)
             {
-                IntentarAgarrar();
+                //IntentarAgarrar();
             }
             else
             {
-                DispararObjeto();
+                //DispararObjeto();
             }
         }
         else if (Input.GetMouseButtonDown(1) && item != null)
         {
-            SoltarObjeto();
+            //SoltarObjeto();
         }
     }
 
@@ -67,7 +67,6 @@ public class RayDebug : MonoBehaviour
             }
         }
     }
-
     void DispararObjeto()
     {
         rbItem.useGravity = true;
@@ -81,5 +80,25 @@ public class RayDebug : MonoBehaviour
         rbItem.useGravity = true;
         item = null;
         rbItem = null;
+    }
+
+    public void OnGrabObject(InputAction.CallbackContext context)
+    {
+        if (!context.started) return;
+
+        if (rbItem != null)
+        {
+            DispararObjeto();
+            return;
+        }
+
+        IntentarAgarrar();
+    }
+    public void OnLeaveObject(InputAction.CallbackContext context)
+    {
+        if (!context.started) return;
+
+        if (rbItem != null)
+            SoltarObjeto();
     }
 }

@@ -38,10 +38,9 @@ public class PortalController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (wallCol != null) wallCol.enabled = true;
+        ActiveCollaider();
     }
 
-    
     private void LateUpdate()
     {
         if (!playerCamera || mirrorPortal == null || mirrorPortal.reflectionCamera == null) return;
@@ -65,5 +64,9 @@ public class PortalController : MonoBehaviour
     {
         portalSurface = surface;
         wallCol = portalSurface ? portalSurface.GetComponent<Collider>() : null;
+    }
+    public void ActiveCollaider()
+    {
+        wallCol.enabled = true;    
     }
 }

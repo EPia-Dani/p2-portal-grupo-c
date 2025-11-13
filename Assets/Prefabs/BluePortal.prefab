@@ -55,13 +55,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb9ff7f03ea49c34ca24847f1005aff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   playerCamera: {fileID: 0}
   mirrorPortal: {fileID: 0}
   reflectionCamera: {fileID: 203530727616353209}
-  spawnPoint: {fileID: 0}
-  exitOffset: 0.5
-  reenterCooldown: 0.2
   offsetNearPlane: 0
   portalSurface: {fileID: 0}
 --- !u!65 &8110145745232728036
@@ -477,8 +473,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.195384, y: 1.8381467, z: 0.20972715}
-  m_Center: {x: 0.24850845, y: -0.41907346, z: 0.1071586}
+  m_Size: {x: 2.6518302, y: 2.783175, z: 0.20972715}
+  m_Center: {x: 0.023868918, y: 0.05344057, z: 0.1071586}
 --- !u!114 &2897307984039764998
 MonoBehaviour:
   m_ObjectHideFlags: 0
