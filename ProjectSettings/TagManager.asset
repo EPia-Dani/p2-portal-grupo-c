@@ -9,6 +9,7 @@ TagManager:
   - Turret
   - PortalLimit
   - TeleportPoint
+  - Spawn
   layers:
   - Default
   - TransparentFX

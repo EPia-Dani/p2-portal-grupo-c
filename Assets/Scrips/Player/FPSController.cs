@@ -33,6 +33,7 @@ public class FPSController : MonoBehaviour
         PlayerInputHandler.SprintChanged += OnSprintChanged;
         PlayerInputHandler.JumpRequest += OnJumpRequested;
         //PlayerInputHandler.AimingChanged += OnAimingChanged;
+        TransportationDetection.TeleportationPlayer += Transportation;
 
 
     }
@@ -43,15 +44,17 @@ public class FPSController : MonoBehaviour
         PlayerInputHandler.SprintChanged -= OnSprintChanged;
         PlayerInputHandler.JumpRequest -= OnJumpRequested;
         //PlayerInputHandler.AimingChanged -= OnAimingChanged;
+        TransportationDetection.TeleportationPlayer -= Transportation;
 
     }
     void Start()
     {
-        mYaw = transform.rotation.y; //Inicializa el valor del yaw con la rotacion inicial del jugador
-        mPitch = mPitchController.localRotation.x; //Inicializa el valor del pitch y del yaw con la rotacion inicial del jugador
+        mYaw = transform.eulerAngles.y;                       // no uses rotation.y (cuaternión)
+        mPitch = mPitchController.localEulerAngles.x;
         controller = GetComponent<CharacterController>();
-        Cursor.lockState = CursorLockMode.Locked; //Bloquea el cursor en el centro de la pantalla
+        Cursor.lockState = CursorLockMode.Locked;
     }
+
 
     void Update()
     {
@@ -81,6 +84,31 @@ public class FPSController : MonoBehaviour
         {
             mVerticalSpeed = 0.0f; // Fuerza hacia abajo para mantener el contacto con el suelo
         }
+    }
+    private void Transportation(PortalController portal)
+    {
+        controller.enabled = false;
+        Transform entry = portal.transform;               // portal que atraviesas
+        Transform exit = portal.mirrorPortal.transform;  // portal de salida
+
+        // 1. Coords locales respecto al portal de entrada
+        Vector3 localPos = entry.InverseTransformPoint(transform.position);
+        Vector3 localDir = entry.InverseTransformDirection(transform.forward);
+
+        // 2. Cruce del portal (invertir Z, por ejemplo)
+        localPos.z = -localPos.z;
+        localDir.z = -localDir.z;
+
+        // 3. Transformar al sistema del portal de salida
+        transform.position = exit.TransformPoint(localPos);
+        transform.forward = exit.TransformDirection(localDir);
+
+        // 4. Pequeño avance para salir del trigger
+        transform.position += transform.forward * 0.3f;   // tu exitOffset
+
+        // 5. Sincronizar el controlador con la nueva rotación
+        mYaw = transform.eulerAngles.y;
+        controller.enabled = true;
     }
 
     private void OnMoveChanged(Vector2 direction)

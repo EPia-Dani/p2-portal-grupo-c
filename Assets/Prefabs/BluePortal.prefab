@@ -59,7 +59,8 @@ MonoBehaviour:
   playerCamera: {fileID: 0}
   mirrorPortal: {fileID: 0}
   reflectionCamera: {fileID: 203530727616353209}
-  exitOffset: 0.3
+  spawnPoint: {fileID: 0}
+  exitOffset: 0.5
   reenterCooldown: 0.2
   offsetNearPlane: 0
   portalSurface: {fileID: 0}
@@ -436,7 +437,7 @@ GameObject:
   - component: {fileID: 975133794044195085}
   - component: {fileID: 2897307984039764998}
   m_Layer: 0
-  m_Name: PortalLimit (4)
+  m_Name: TeleportationPoint
   m_TagString: TeleportPoint
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -476,8 +477,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 0.6055881}
-  m_Center: {x: 7.8286427e-16, y: 0, z: 0.30508912}
+  m_Size: {x: 4.195384, y: 1.8381467, z: 0.20972715}
+  m_Center: {x: 0.24850845, y: -0.41907346, z: 0.1071586}
 --- !u!114 &2897307984039764998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,6 +492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portal: {fileID: 5145470917267173595}
+  teleportCooldown: 0.2
 --- !u!1 &7315126242867269605
 GameObject:
   m_ObjectHideFlags: 0

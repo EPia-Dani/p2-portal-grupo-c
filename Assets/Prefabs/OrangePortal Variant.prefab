@@ -23,6 +23,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 975133794044195085, guid: fd7c1ff5180ee644184ad45075fa8df8,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 0.21087508
+      objectReference: {fileID: 0}
+    - target: {fileID: 975133794044195085, guid: fd7c1ff5180ee644184ad45075fa8df8,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.107732594
+      objectReference: {fileID: 0}
     - target: {fileID: 1613760434447234970, guid: fd7c1ff5180ee644184ad45075fa8df8,
         type: 3}
       propertyPath: m_Name
@@ -52,6 +62,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: OrangePlane
+      objectReference: {fileID: 0}
+    - target: {fileID: 3431761430086674169, guid: fd7c1ff5180ee644184ad45075fa8df8,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.104
       objectReference: {fileID: 0}
     - target: {fileID: 3987855164932797194, guid: fd7c1ff5180ee644184ad45075fa8df8,
         type: 3}
@@ -133,6 +148,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5145470917267173595, guid: fd7c1ff5180ee644184ad45075fa8df8,
+        type: 3}
+      propertyPath: SpawnPoint
+      value: 
+      objectReference: {fileID: 7186675064675864749}
+    - target: {fileID: 5145470917267173595, guid: fd7c1ff5180ee644184ad45075fa8df8,
+        type: 3}
+      propertyPath: exitOffset
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5145470917267173595, guid: fd7c1ff5180ee644184ad45075fa8df8,
+        type: 3}
+      propertyPath: spawnPoint
+      value: 
+      objectReference: {fileID: 7186675064675864749}
+    - target: {fileID: 5145470917267173595, guid: fd7c1ff5180ee644184ad45075fa8df8,
+        type: 3}
+      propertyPath: portalSurface
+      value: 
+      objectReference: {fileID: 7186675064675864749}
     - target: {fileID: 5145470917267173595, guid: fd7c1ff5180ee644184ad45075fa8df8,
         type: 3}
       propertyPath: offsetNearPlane
@@ -274,3 +309,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd7c1ff5180ee644184ad45075fa8df8, type: 3}
+--- !u!1 &7186675064675864749 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1414219153254873113, guid: fd7c1ff5180ee644184ad45075fa8df8,
+    type: 3}
+  m_PrefabInstance: {fileID: 8078439818656671924}
+  m_PrefabAsset: {fileID: 0}

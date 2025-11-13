@@ -118,7 +118,6 @@ public class ShootingPortals : MonoBehaviour
         var pc = currentPortal.GetComponent<PortalController>();
         if (!pc) return;
 
-        pc.player = playerTransform;
         pc.playerCamera = playerCamera;
 
         pc.SetPortalSurface(surface);
