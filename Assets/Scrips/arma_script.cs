@@ -11,7 +11,7 @@ public class arma_script : MonoBehaviour
     [SerializeField] Transform player;
 
 
-    void Update()
+    void FixedUpdate()
     {
         grab = new Vector3(transform.position.x, transform.position.y - 0.6f, transform.position.z);
         // rayo para ver linea, luego quitar
@@ -27,23 +27,6 @@ public class arma_script : MonoBehaviour
         if (item != null)
         {
             item.transform.position = grab + -transform.forward * 3f;
-        }
-
-       
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (item == null)
-            {
-                //IntentarAgarrar();
-            }
-            else
-            {
-                //DispararObjeto();
-            }
-        }
-        else if (Input.GetMouseButtonDown(1) && item != null)
-        {
-            //SoltarObjeto();
         }
     }
 

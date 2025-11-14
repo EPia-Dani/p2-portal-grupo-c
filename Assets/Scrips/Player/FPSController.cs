@@ -24,7 +24,7 @@ public class FPSController : MonoBehaviour
     private Vector2 mLookDirection;
     private float mVerticalSpeed;
     private bool isSprinting;
-    private bool IsGrounded;
+    [SerializeField] private bool IsGrounded;
 
     private void OnEnable()
     {

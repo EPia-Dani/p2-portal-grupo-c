@@ -13,7 +13,7 @@ public class boton_script : MonoBehaviour
             Rigidbody rb = other.GetComponent<Rigidbody>();
             if (rb != null && rb.linearVelocity.magnitude < 0.1f)
             {
-                Debug.Log("Cubo");
+                Debug.Log("Cube");
                 surtidor.SoltarCubo();
             }
         }

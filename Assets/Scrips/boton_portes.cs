@@ -21,7 +21,7 @@ public class boton_portes : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Cube"))
         {
             Debug.Log("Hola");
             
