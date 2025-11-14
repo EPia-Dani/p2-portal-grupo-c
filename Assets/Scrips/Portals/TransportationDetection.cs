@@ -7,9 +7,8 @@ public class TransportationDetection : MonoBehaviour
     public static event Action<PortalController> TeleportationObject;
     [SerializeField] private PortalController portal;
 
-    // Cooldown global para todos los portales
     private static float nextTeleportTime = 0f;
-    [SerializeField] private float teleportCooldown = 0.2f; // ajustable en el inspector
+    [SerializeField] private float teleportCooldown = 0.2f; 
 
     private void OnTriggerEnter(Collider other)
     {
@@ -17,8 +16,6 @@ public class TransportationDetection : MonoBehaviour
         {
             if (Time.time < nextTeleportTime)
                 return;
-
-            // Marcamos el próximo instante en el que se permitirá teletransportar
             nextTeleportTime = Time.time + teleportCooldown;
 
             TeleportationPlayer?.Invoke(portal);

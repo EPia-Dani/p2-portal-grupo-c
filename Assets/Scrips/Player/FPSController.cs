@@ -37,7 +37,7 @@ public class FPSController : MonoBehaviour
 
     void Start()
     {
-        mYaw = transform.eulerAngles.y;                       // no uses rotation.y (cuaternión)
+        mYaw = transform.eulerAngles.y;                    
         mPitch = mPitchController.localEulerAngles.x;
         controller = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
@@ -58,47 +58,39 @@ public class FPSController : MonoBehaviour
 
         if (isSprinting)
         {
-            finalDirection *= sprintMultiplier; // Aplica el multiplicador de sprint
+            finalDirection *= sprintMultiplier; 
         }
 
-        //JUMP
-        mVerticalSpeed += Physics.gravity.y * Time.deltaTime; //Aplica la gravedad al vertical speed
-        finalDirection.y = mVerticalSpeed * Time.deltaTime; //Aplica el vertical speed al movimiento final
-
+        mVerticalSpeed += Physics.gravity.y * Time.deltaTime; 
+        finalDirection.y = mVerticalSpeed * Time.deltaTime; 
         // Manejo de la gravedad y salto
-        CollisionFlags collisionsFlags = controller.Move(finalDirection); //Aplica el movimiento al CharacterController y obtiene las colisiones
-        IsGrounded = (collisionsFlags & CollisionFlags.CollidedBelow) != 0; //Comprueba si el CharacterController esta tocando el suelo
+        CollisionFlags collisionsFlags = controller.Move(finalDirection);
+        IsGrounded = (collisionsFlags & CollisionFlags.CollidedBelow) != 0; 
         if (IsGrounded && mVerticalSpeed > 0.0f)
         {
-            mVerticalSpeed = 0.0f; // Fuerza hacia abajo para mantener el contacto con el suelo
+            mVerticalSpeed = 0.0f; 
         }
     }
     private void Transportation(PortalController portal)
     {
         controller.enabled = false;
-        Transform entry = portal.transform;               // portal que atraviesas
-        Transform exit = portal.mirrorPortal.transform;  // portal de salida
+        Transform entry = portal.transform;              
+        Transform exit = portal.mirrorPortal.transform;  
 
-        //Coords locales respecto al portal de entrada
         Vector3 localPos = entry.InverseTransformPoint(transform.position);
         Vector3 localDir = entry.InverseTransformDirection(transform.forward);
 
-        //Cruce del portal (invertir Z, por ejemplo)
         localPos.z = -localPos.z;
         localDir.z = -localDir.z;
 
-        // 3. Transformar al sistema del portal de salida
         transform.position = exit.TransformPoint(localPos);
         transform.forward = exit.TransformDirection(localDir);
 
-        // Escalado proporcional
         float scaleFactor = exit.localScale.x / entry.localScale.x;
         transform.localScale *= scaleFactor;
 
-        //Pequeño avance para salir del trigger
-        transform.position += transform.forward * 0.3f;   // tu exitOffset
+        transform.position += transform.forward * 0.3f;   
 
-        //Sincronizar el controlador con la nueva rotación
         mYaw = transform.eulerAngles.y;
         controller.enabled = true;
         portal.mirrorPortal.ActiveCollaider();
@@ -106,19 +98,19 @@ public class FPSController : MonoBehaviour
 
     void OnLook(InputValue value)
     {
-        Vector2 pos = value.Get<Vector2>();//Obtiene el valor del input del raton
-        mYaw += pos.x * rotationSpeed * Time.deltaTime;//Actualiza el valor del yaw
-        mPitch += pos.y * rotationSpeed * Time.deltaTime;//Actualiza el valor del pitch (nota el signo positivo para movimiento invertido)
+        Vector2 pos = value.Get<Vector2>();
+        mYaw += pos.x * rotationSpeed * Time.deltaTime;
+        mPitch += pos.y * rotationSpeed * Time.deltaTime;
     }
 
-    public void OnMove(InputAction.CallbackContext context)//Esto se hace con eventos del input sistem que es mas eficiente 
+    public void OnMove(InputAction.CallbackContext context)
     {
-        mDirection = context.ReadValue<Vector2>();//Obtiene el valor del input del teclado
+        mDirection = context.ReadValue<Vector2>();
     }
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        mLookDirection = context.ReadValue<Vector2>();//Obtiene el valor del input del raton
+        mLookDirection = context.ReadValue<Vector2>();
 
     }
 

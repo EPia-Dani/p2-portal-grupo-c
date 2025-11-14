@@ -1,19 +1,15 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
 public class PortalController : MonoBehaviour
 {
     [Header("Refs")]
     public Camera playerCamera;
     public PortalController mirrorPortal;
     public Camera reflectionCamera;
-    [SerializeField] private float offsetNearPlane = 0.05f;    // Para clipping del render del portal
-
-    [SerializeField] private GameObject portalSurface;         // Superficie de pared del portal (con Collider)
-
+    [SerializeField] private float offsetNearPlane = 0.05f;   
+    [SerializeField] private GameObject portalSurface;         
     private float cooldownTimer = 0f;
-
-    private Collider wallCol;                        // collider de la pared (portalSurface)
+    private Collider wallCol;                  
 
     private void Awake()
     {
@@ -31,7 +27,6 @@ public class PortalController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // “Quitar” la colisión de la pared: deshabilitar su collider
         wallCol = portalSurface ? portalSurface.GetComponent<Collider>() : wallCol;
         if (wallCol != null) wallCol.enabled = false;
     }
@@ -45,7 +40,6 @@ public class PortalController : MonoBehaviour
     {
         if (!playerCamera || mirrorPortal == null || mirrorPortal.reflectionCamera == null) return;
 
-        // Render del portal (tu mismo código)
         Vector3 camWorldPos = playerCamera.transform.position;
         Vector3 camLocalPos = transform.InverseTransformPoint(camWorldPos);
         camLocalPos.z = -camLocalPos.z;

@@ -1,18 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class ShootingPortals : MonoBehaviour
 {
-    [Header("Basics")]
-    [SerializeField] private Camera playerCamera;
+    [Header("Refs")]
     [SerializeField] private LayerMask portalSpawnMask;
     [SerializeField] private LayerMask invalidLayers;
     [SerializeField] private float range = 100f;
     [SerializeField] private GameObject bluePortalPrefab;
     [SerializeField] private GameObject orangePortalPrefab;
-    [SerializeField] private bool canShoot = true;
-
+    private bool canShoot = true;
+    private Camera playerCamera;
+    private GameObject currentBluePortal;
+    private GameObject currentOrangePortal;
+    private Transform playerTransform;
 
     [Header("Placement")]
     [SerializeField] private string portalLimitTag = "PortalLimit";
@@ -20,33 +23,26 @@ public class ShootingPortals : MonoBehaviour
     [SerializeField] private float checkDepth = 0.35f;
 
     [Header("Resising")]
-    [SerializeField] private GameObject portalBluePreview;     // prefab de preview azul
-    [SerializeField] private GameObject portalOrangePreview;   // prefab de preview naranja
-    [SerializeField] private float minPortalScale = 0.5f;      // 50%
-    [SerializeField] private float maxPortalScale = 2f;        // 200%
+    [SerializeField] private GameObject portalBluePreview;    
+    [SerializeField] private GameObject portalOrangePreview;   
+    [SerializeField] private float minPortalScale = 0.5f;      
+    [SerializeField] private float maxPortalScale = 2f;        
     [SerializeField] private float scrollScaleSpeed = 0.5f;
-
+    private float currentBlueScale = 1f;
+    private float currentOrangeScale = 1f;
     private bool isHolding = false;
-    private bool isBlueHolding = false;
-
     private GameObject currentPreviewInstance;
     private GameObject currentPreviewPrefab;
 
-    private float currentBlueScale = 1f;
-    private float currentOrangeScale = 1f;
-
-    // Referencias al portal activo actual
-    private GameObject currentBluePortal;
-    private GameObject currentOrangePortal;
-    private Transform playerTransform;
-
-
+    
+    public static event Action ShootingBluePortal;
+    public static event Action ShootingOrangePortal;
 
     private void Awake()
     {
-        // cachea el player una vez
-        var p = GameObject.FindGameObjectWithTag("Player");
-        if (p) playerTransform = p.transform;
+        var player = GameObject.FindGameObjectWithTag("Player");
+        playerCamera = player.GetComponentInChildren<Camera>();
+        if (player) playerTransform = player.transform;
     }
 
     private void Update()
@@ -54,11 +50,11 @@ public class ShootingPortals : MonoBehaviour
         if (!isHolding || currentPreviewPrefab == null || playerCamera == null)
             return;
 
-        // Actualizamos continuamente la previsualización mientras mantenemos el click
         visualizePortal(currentPreviewPrefab);
+        
     }
 
-    private void ShootPortal(GameObject portalPrefab, ref GameObject currentPortal, float scale = 1f)
+    private void ShootPortal(GameObject portalPrefab, ref GameObject currentPortal, bool blue, float scale = 1f)
     {
         if (!playerCamera || !portalPrefab || !canShoot) return;
 
@@ -73,15 +69,21 @@ public class ShootingPortals : MonoBehaviour
         if (!ValidatePoints(portalPrefab, hit, proposedPos, proposedRot))
             return;
 
-        // Si ya hay un portal del mismo color, destrúyelo
         if (currentPortal != null)
             Destroy(currentPortal);
 
-        // Instancia el nuevo portal y guarda la referencia
         currentPortal = Instantiate(portalPrefab, proposedPos, proposedRot);
         currentPortal.transform.localScale = Vector3.one * scale;
 
         InicilizePortal(currentPortal, hit.collider.gameObject);
+        if (blue)
+        {
+            ShootingBluePortal?.Invoke();
+        }
+        else
+        {
+            ShootingOrangePortal?.Invoke();
+        }
     }
 
     private bool ValidatePoints(GameObject portalPrefab, RaycastHit hit, Vector3 portalPos, Quaternion portalRot)
@@ -99,7 +101,7 @@ public class ShootingPortals : MonoBehaviour
             if (!child.CompareTag(portalLimitTag)) continue;
 
             Vector3 local = child.localPosition;
-            local.z = 0f; // aseguramos que los puntos estén en el plano del portal
+            local.z = 0f; 
             Vector3 pointWorld = portalPos + portalRot * local;
 
             Vector3 origin = pointWorld + wallNormal * surfaceEpsilon;
@@ -139,7 +141,6 @@ public class ShootingPortals : MonoBehaviour
 
     private void visualizePortal(GameObject portalPreviewPrefab)
     {
-        // Ray desde el centro de la cámara
         Ray ray = playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         if (!Physics.Raycast(ray, out RaycastHit hit, range, portalSpawnMask, QueryTriggerInteraction.Ignore))
         {
@@ -152,7 +153,6 @@ public class ShootingPortals : MonoBehaviour
         Vector3 proposedPos = hit.point + wallNormal * surfaceEpsilon;
         Quaternion proposedRot = Quaternion.LookRotation(wallNormal, Vector3.up);
 
-        // Usamos el prefab real del portal para validar puntos (tienen el mismo tamaño que la preview)
         GameObject portalRealPrefab = (portalPreviewPrefab == portalBluePreview) ? bluePortalPrefab : orangePortalPrefab;
 
         if (!ValidatePoints(portalRealPrefab, hit, proposedPos, proposedRot))
@@ -162,7 +162,6 @@ public class ShootingPortals : MonoBehaviour
             return;
         }
 
-        // Instanciamos la preview si no existe o si ha cambiado de tipo (azul/naranja)
         if (currentPreviewInstance == null || currentPreviewPrefab != portalPreviewPrefab)
         {
             if (currentPreviewInstance != null)
@@ -176,7 +175,6 @@ public class ShootingPortals : MonoBehaviour
         currentPreviewInstance.transform.position = proposedPos;
         currentPreviewInstance.transform.rotation = proposedRot;
 
-        // Leer scroll para cambiar tamaño
         float scroll = Mouse.current != null ? Mouse.current.scroll.ReadValue().y : 0f;
         if (Mathf.Abs(scroll) > 0.01f)
         {
@@ -201,19 +199,15 @@ public class ShootingPortals : MonoBehaviour
         if (context.started)
         {
             isHolding = true;
-            isBlueHolding = true;
-            // Empezamos a visualizar el portal azul
             visualizePortal(portalBluePreview);
         }
 
         if (context.canceled)
         {
             isHolding = false;
-            isBlueHolding = false;
 
             float scale = currentBlueScale;
 
-            // Eliminamos la preview
             if (currentPreviewInstance != null)
             {
                 Destroy(currentPreviewInstance);
@@ -221,8 +215,7 @@ public class ShootingPortals : MonoBehaviour
                 currentPreviewPrefab = null;
             }
 
-            // Colocamos el portal azul con la escala elegida
-            ShootPortal(bluePortalPrefab, ref currentBluePortal, scale);
+            ShootPortal(bluePortalPrefab, ref currentBluePortal, true, scale);
         }
     }
 
@@ -231,8 +224,6 @@ public class ShootingPortals : MonoBehaviour
         if (context.started)
         {
             isHolding = true;
-            isBlueHolding = false;
-            // Empezamos a visualizar el portal naranja
             visualizePortal(portalOrangePreview);
         }
 
@@ -242,7 +233,6 @@ public class ShootingPortals : MonoBehaviour
 
             float scale = currentOrangeScale;
 
-            // Eliminamos la preview
             if (currentPreviewInstance != null)
             {
                 Destroy(currentPreviewInstance);
@@ -250,8 +240,7 @@ public class ShootingPortals : MonoBehaviour
                 currentPreviewPrefab = null;
             }
 
-            // Colocamos el portal naranja con la escala elegida
-            ShootPortal(orangePortalPrefab, ref currentOrangePortal, scale);
+            ShootPortal(orangePortalPrefab, ref currentOrangePortal, false, scale);
         }
     }
 }
