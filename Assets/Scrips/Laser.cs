@@ -69,6 +69,6 @@ public class Laser : MonoBehaviour
         {
             isActive = false;
             laser.enabled = false;
-        }  
+        } 
     }
 }
