@@ -29,6 +29,9 @@ public class ObjectTransportation : MonoBehaviour
         transform.position = exit.TransformPoint(localPos);
         transform.forward = exit.TransformDirection(localDir);
 
+        float scaleFactor = exit.localScale.x / entry.localScale.x;
+        transform.localScale *= scaleFactor;
+
         // 4. Pequeño avance para salir del trigger
         transform.position += transform.forward * 0.3f;   // tu exitOffset
     }
