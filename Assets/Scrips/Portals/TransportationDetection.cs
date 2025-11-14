@@ -4,7 +4,7 @@ using UnityEngine;
 public class TransportationDetection : MonoBehaviour
 {
     public static event Action<PortalController> TeleportationPlayer;
-    public static event Action<PortalController> TeleportationObject;
+    public static event Action<PortalController, GameObject> TeleportationObject;
     [SerializeField] private PortalController portal;
 
     private static float nextTeleportTime = 0f;
@@ -22,7 +22,7 @@ public class TransportationDetection : MonoBehaviour
         }
         else
         { 
-            TeleportationObject?.Invoke(portal);
+            TeleportationObject?.Invoke(portal, other.gameObject);
         }
     }
 

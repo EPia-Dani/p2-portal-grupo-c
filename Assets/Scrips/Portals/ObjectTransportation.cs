@@ -11,24 +11,36 @@ public class ObjectTransportation : MonoBehaviour
         TransportationDetection.TeleportationObject -= Transportation;
     }
 
-    private void Transportation(PortalController portal)
+    private void Transportation(PortalController portal, GameObject gameObject)
     {
+        if (gameObject != this.gameObject)
+            return;
         Debug.Log("Objeto transportado a través del portal: " + portal.name);
-        Transform entry = portal.transform;               
-        Transform exit = portal.mirrorPortal.transform;  
+        Transform entry = portal.transform;
+        Transform exit = portal.mirrorPortal.transform;
 
-        Vector3 localPos = entry.InverseTransformPoint(transform.position);
-        Vector3 localDir = entry.InverseTransformDirection(transform.forward);
+        GameObject obj = Instantiate(gameObject);
+        obj.transform.position = transform.position;
+        obj.transform.rotation = transform.rotation;
+        obj.transform.localScale = transform.localScale;
+
+        Destroy(gameObject); 
+
+        Transform t = obj.transform;
+
+        Vector3 localPos = entry.InverseTransformPoint(t.position);
+        Vector3 localDir = entry.InverseTransformDirection(t.forward);
 
         localPos.z = -localPos.z;
         localDir.z = -localDir.z;
 
-        transform.position = exit.TransformPoint(localPos);
-        transform.forward = exit.TransformDirection(localDir);
+        t.position = exit.TransformPoint(localPos);
+        t.forward = exit.TransformDirection(localDir);
 
         float scaleFactor = exit.localScale.x / entry.localScale.x;
-        transform.localScale *= scaleFactor;
+        t.localScale *= scaleFactor;  
 
-        transform.position += transform.forward * 0.3f;
+        t.position += t.forward * 0.3f;
     }
+
 }
